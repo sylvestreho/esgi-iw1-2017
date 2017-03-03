@@ -9,9 +9,11 @@ use Blog\InputFilter\AddPost;
 
 class IndexController extends AbstractActionController
 {
-  public function __construct()
-  {
+  protected $dbAdapter;
 
+  public function __construct($dbAdapter)
+  {
+      $this->dbAdapter = $dbAdapter;
   }
 
   public function indexAction()

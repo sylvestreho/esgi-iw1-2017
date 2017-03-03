@@ -13,8 +13,8 @@
 
 return [
     'service_manager' => [
-        'factories' => array(
-            
-        ),
+        'factories' => [
+          'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory'
+        ],
     ]
 ];
