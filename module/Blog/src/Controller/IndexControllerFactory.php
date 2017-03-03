@@ -8,6 +8,6 @@ class IndexControllerFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        return new IndexController($container->get('Zend\Db\Adapter\Adapter'));
+        return new IndexController($container->get('Blog\Service\BlogService'));
     }
 }

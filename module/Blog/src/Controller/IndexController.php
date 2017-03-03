@@ -10,11 +10,11 @@ use Blog\Entity\Post;
 
 class IndexController extends AbstractActionController
 {
-  protected $dbAdapter;
+  protected $blogService;
 
-  public function __construct($dbAdapter)
+  public function __construct($blogService)
   {
-      $this->dbAdapter = $dbAdapter;
+      $this->blogService = $blogService;
   }
 
   public function indexAction()
@@ -40,6 +40,7 @@ class IndexController extends AbstractActionController
       $data = $this->request->getPost(); // key value array
       $form->setData($data);
       if ($form->isValid()) {
+        $this->blogService->save($blogPost);
         // @todo insert article into db
         return $this->redirect()->toRoute('blog_index');
       }
