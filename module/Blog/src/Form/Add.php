@@ -4,12 +4,21 @@ namespace Blog\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
+use Blog\Entity\Hydrator\PostHydrator;
+use Blog\Entity\Hydrator\CategoryHydrator;
+use Zend\Hydrator\Aggregate\AggregateHydrator;
 
 class Add extends Form
 {
   public function __construct()
   {
       parent::__construct('add');
+
+      $hydrator = new AggregateHydrator();
+      $hydrator->add(new PostHydrator());
+      $hydrator->add(new CategoryHydrator());
+
+      $this->setHydrator($hydrator);
 
       $title = new Element\Text('title');
       $title->setLabel('Title');

@@ -6,6 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Blog\Form\Add;
 use Blog\InputFilter\AddPost;
+use Blog\Entity\Post;
 
 class IndexController extends AbstractActionController
 {
@@ -32,6 +33,9 @@ class IndexController extends AbstractActionController
     ];
 
     if ($this->request->isPost()) { // if form is submitted
+      $blogPost = new Post();
+      $form->bind($blogPost);
+
       $form->setInputFilter(new AddPost());
       $data = $this->request->getPost(); // key value array
       $form->setData($data);
