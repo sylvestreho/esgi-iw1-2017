@@ -1,1 +1,27 @@
+<!-- Blog/view/blog/index/add.phtml -->
 <h3>New article</h3>
+
+<?php
+$form = $this->form;
+$form->prepare();
+echo $this->form()->openTag($form); // <form method="POST">
+?>
+
+<div class="form-group">
+  <?php echo $this->formRow($form->get('title')); ?>
+</div>
+
+<div class="form-group">
+  <?php echo $this->formRow($form->get('slug')); ?>
+</div>
+
+<div class="form-group">
+  <?php echo $this->formRow($form->get('content')); ?>
+</div>
+
+<div class="form-group">
+  <?php echo $this->formRow($form->get('category_id')); ?>
+</div>
+
+<?php echo $this->formSubmit($form->get('submit')); ?>
+<?php echo $this->form()->closeTag(); // </form> ?>
