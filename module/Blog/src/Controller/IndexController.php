@@ -9,7 +9,7 @@ class IndexController extends AbstractActionController
 {
   public function __construct()
   {
-    
+
   }
 
   public function indexAction()
@@ -17,5 +17,11 @@ class IndexController extends AbstractActionController
     $variables = [];
 
     return new ViewModel();
+  }
+
+  public function addAction()
+  {
+    $variables = [];
+    return new ViewModel($variables);
   }
 }
