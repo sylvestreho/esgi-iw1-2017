@@ -35,7 +35,7 @@ class BlogServiceImpl implements BlogService
 
   public function find($categorySlug, $postSlug)
   {
-    return $this->postRepository->find($categorySlug, $postSlug)
+    return $this->postRepository->find($categorySlug, $postSlug);
   }
 
   public function findById($postId)

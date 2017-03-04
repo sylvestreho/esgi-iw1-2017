@@ -15,7 +15,7 @@ return [
     }
   ],
   'initializers' => [
-    function (\Zend\ServiceManager $sm, $instance) {
+    function (\Zend\ServiceManager\ServiceManager $sm, $instance) {
       if ($instance instanceof \Zend\Db\Adapter\AdapterAwareInterface) {
         $instance->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
       }
