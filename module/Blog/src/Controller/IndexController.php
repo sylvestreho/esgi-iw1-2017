@@ -19,8 +19,8 @@ class IndexController extends AbstractActionController
 
   public function indexAction()
   {
-    $posts = $this->blogService->fetchAll();
-    return new ViewModel(['posts' => $posts]);
+    $paginator = $this->blogService->fetch($this->params())->fromRoute('page');
+    return new ViewModel(['paginator' => $paginator]);
   }
 
   public function addAction()

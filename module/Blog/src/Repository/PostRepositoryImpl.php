@@ -72,7 +72,40 @@ class PostRepositoryImpl implements PostRepository
 
   public function fetch($page)
   {
+    $sql = new \Zend\Db\Sql\Sql($this->adapter);
+    $select = $sql->select();
+    $select->columns([
+      'id',
+      'title',
+      'slug',
+      'content',
+      'created'
+    ])->from([
+      'p' => 'post'
+    ])->join(
+      ['c' => 'category'], // TABLE NAME
+      'c.id = p.category_id', // JOIN CONDITION
+      ['category_id' => 'id', 'name', 'category_slug' => 'slug']
+    )->order('p.id DESC');
 
+    $statement = $sql->prepareStatementForSqlObject($select);
+    $result = $statement->execute();
+
+    $hydrator = new AggregateHydrator();
+    $hydrator->add(new PostHydrator());
+    $hydrator->add(new CategoryHydrator());
+
+    $resultSet = new HydratingResultSet($hydrator, new Post());
+    $paginatorAdapter = new \Zend\Paginator\Adapter\DbSelect(
+      $select,
+      $this->adapter,
+      $resultSet
+    );
+    $paginator = new \Zend\Paginator\Paginator($paginatorAdapter);
+    $paginator->setCurrentPageNumber($page);
+    $paginator->setItemCountPerPage(3);
+
+    return $paginator;
   }
 
   public function find($categorySlug, $postSlug)
