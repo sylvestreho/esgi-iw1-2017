@@ -3,3 +3,7 @@
 <a class="btn btn-primary" href="<?php echo $this->url('blog_add'); ?>">
   Write an article
 </a>
+
+<?php foreach ($this->posts as $post): ?>
+  <?php echo $post->getTitle() . "<br/>" ?>
+<?php endforeach; ?>
