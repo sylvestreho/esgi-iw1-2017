@@ -4,6 +4,36 @@
   Write an article
 </a>
 
-<?php foreach ($this->posts as $post): ?>
-  <?php echo $post->getTitle() . "<br/>" ?>
-<?php endforeach; ?>
+<?php if (!empty($this->paginator)): ?>
+  <?php foreach ($this->paginator as $post): ?>
+      <hr/>
+      <div class="row">
+          <div class="col-md-5">
+            <strong><?php echo $this->escapeHtml($post->getTitle()); ?></strong>
+          <?php $postedAt = $this->dateFormat(
+            $post->getCreated(),
+            IntlDateFormatter::MEDIUM,
+            IntlDateFormatter::MEDIUM,
+            'en_US'
+          ); ?>
+          (<?php echo $postedAt; ?>)
+        </div>
+        <div class="col-md-3">
+          (<?php echo $this->escapeHtml($post->getCategory()->getName()); ?>)
+        </div>
+      </div>
+  <?php endforeach; ?>
+<?php else: ?>
+  <div class="row">
+    <div class="col-md-12">No post to display yet...</div>
+  </div>
+<?php endif; ?>
+<hr />
+<?php
+echo $this->paginationControl(
+  $this->paginator,
+  'Sliding',
+  'partial/pagination',
+  [ 'route' => 'blog_index/paged' ]
+);
+?>

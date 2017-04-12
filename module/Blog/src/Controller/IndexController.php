@@ -19,7 +19,7 @@ class IndexController extends AbstractActionController
 
   public function indexAction()
   {
-    $paginator = $this->blogService->fetch($this->params())->fromRoute('page');
+    $paginator = $this->blogService->fetch($this->params()->fromRoute('page'));
     return new ViewModel(['paginator' => $paginator]);
   }
 
