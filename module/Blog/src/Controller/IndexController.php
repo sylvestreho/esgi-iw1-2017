@@ -62,6 +62,13 @@ class IndexController extends AbstractActionController
         $form->setInputFilter(new AddPost());
         $data = $this->request->getPost();
         $form->setData($data); // key value array
+
+        if ($form->isValid()) {
+          $this->blogService->update($blogPost);
+
+          return $this->redirect()->toRoute('blog_index');
+        }
+
     } else { // viewing data
       $post = $this->blogService->findById($this->params()->fromRoute('postId'));
 

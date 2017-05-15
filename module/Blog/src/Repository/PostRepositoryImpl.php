@@ -177,7 +177,7 @@ class PostRepositoryImpl implements PostRepository
 
   public function update(Post $post)
   {
-      $sql = new \‡Zend\Db\Sql\Sql($this->adapter);
+      $sql = new \Zend\Db\Sql\Sql($this->adapter);
       $update = $sql->update('post')
         ->set([
           'title'   => $post->getTitle(),
