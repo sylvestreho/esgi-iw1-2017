@@ -1,0 +1,33 @@
+<?php
+
+$post = $this->post;
+$postedAt = $this->dateFormat(
+  $post->getCreated(),
+  IntlDateFormatter::MEDIUM,
+  IntlDateFormatter::MEDIUM,
+  'en_US'
+);
+?>
+
+<h1><?php echo $this->escapeHtml($post->getTitle()); ?></h1>
+<a href="<?php echo $this->url('blog_edit', ['postId'=> $post->getId()]); ?>">
+  <i class="glyphicon glyphicon-pencil"></i> Edit
+</a>
+<hr/>
+<div class="row">
+  <div class="col-md-12">
+    <?php echo nl2br($this->escapeHtml($post->getContent())); ?>
+  </div>
+</div>
+<hr/>
+<div class="row">
+  <div class="col-md-12">
+    Date: <?php echo $postedAt; ?>
+  </div>
+</div>
+<hr/>
+<div class="row">
+  <div class="col-md-12">
+    Category: <?php echo $post->getCategory()->getName(); ?>
+  </div>
+</div>

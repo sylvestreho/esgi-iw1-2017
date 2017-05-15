@@ -9,7 +9,17 @@
       <hr/>
       <div class="row">
           <div class="col-md-5">
-            <strong><?php echo $this->escapeHtml($post->getTitle()); ?></strong>
+            <strong>
+              <a href="<?php echo $this->url(
+                'display_post',
+                [
+                  'categorySlug'  => $post->getCategory()->getSlug(),
+                  'postSlug'      => $post->getSlug()
+                ]
+                );?>">
+                <?php echo $this->escapeHtml($post->getTitle()); ?>
+              </a>
+            </strong>
           <?php $postedAt = $this->dateFormat(
             $post->getCreated(),
             IntlDateFormatter::MEDIUM,

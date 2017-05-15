@@ -4,6 +4,7 @@ namespace Blog\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Http\Response;
 use Blog\Form\Add;
 use Blog\Form\Edit;
 use Blog\InputFilter\AddPost;
@@ -56,7 +57,11 @@ class IndexController extends AbstractActionController
 
     // form has been submitted
     if ($this->request->isPost()) {
-
+        $blogPost = new Post();
+        $form->bind($blogPost);
+        $form->setInputFilter(new AddPost());
+        $data = $this->request->getPost();
+        $form->setData($data); // key value array
     } else { // viewing data
       $post = $this->blogService->findById($this->params()->fromRoute('postId'));
 
@@ -75,7 +80,16 @@ class IndexController extends AbstractActionController
 
   public function viewPostAction()
   {
+    $post = $this->blogService->find(
+      $this->params()->fromRoute('categorySlug'),
+      $this->params()->fromRoute('postSlug')
+    );
 
+    if (is_null($post)) {
+      $this->getResponse()->setStatusCode(Response::STATUS_CODE_404);
+    }
+
+    return new ViewModel(['post' => $post]);
   }
 
   public function deleteAction()
