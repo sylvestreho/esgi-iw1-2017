@@ -1,0 +1,56 @@
+<?php
+
+namespace User\Repository;
+
+use User\Entity\User;
+use Zend\Crypt\Password\Bcrypt;
+use Zend\Db\Adapter\AdapterAwareTrait;
+use Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter;
+
+class UserRepositoryImpl implements UserRepository
+{
+  use AdapterAwareTrait;
+
+  public function add(User $user)
+  {
+    $sql = new Zend\Db\Sql\Sql($this->adapter);
+
+    $insert = $sql->insert()
+      ->values([
+        'first_name'  => $user->getFirstName(),
+        'last_name'   => $user->getLastName(),
+        'email'       => $user->getEmail(),
+        'password'    => $this->generatePassword($user->getPassword()),
+        'created'     => time()
+      ]);
+
+    $statement = $sql->prepareStatementForSqlObject($insert);
+    $statement->execute();
+  }
+
+  public function generatePassword($clearPassword)
+  {
+    $encrypter = new Bcrypt();
+    $encrypter->setCost(12);
+
+    return $encrypter->create($clearPassword);
+  }
+
+  public function getAuthenticationAdapter()
+  {
+    $callback = function($encryptedPassword, $clearTextPassword) {
+      $encrypter = new Bcrypt();
+      $encrypter->setCost(12);
+
+      return $encrypter->verify($clearTextPassword, $encryptedPassword);
+    };
+
+    $authenticationAdapter = new CallbackCheckAdapter(
+      $this->adpater,
+      'user',   // table name
+      'email',  // login column
+      'password', // credential column
+      $callback // how password should be handled
+    );
+  }
+}
