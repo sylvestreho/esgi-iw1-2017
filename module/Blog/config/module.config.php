@@ -45,6 +45,19 @@ return [
             'action'  => 'add'
           ]
         ]
+      ],
+      'blog_edit' => [
+        'type'  => 'Segment',
+        'options' => [
+          'route' => '/blog/post/edit/:postId',
+          'constraints' => [
+              'postId' => '[0-9]+'
+          ],
+          'defaults' => [
+            'controller'  => 'Blog\Controller\Index',
+            'action'      => 'edit'
+          ]
+        ]
       ]
     ]
   ],
