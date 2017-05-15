@@ -5,6 +5,7 @@ namespace Blog\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Blog\Form\Add;
+use Blog\Form\Edit;
 use Blog\InputFilter\AddPost;
 use Blog\Entity\Post;
 
@@ -46,5 +47,21 @@ class IndexController extends AbstractActionController
     }
 
     return new ViewModel($variables);
+  }
+
+  public function editAction()
+  {
+
+
+  }
+
+  public function viewPostAction()
+  {
+
+  }
+
+  public function deleteAction()
+  {
+
   }
 }
