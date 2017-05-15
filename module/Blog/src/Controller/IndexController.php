@@ -101,6 +101,7 @@ class IndexController extends AbstractActionController
 
   public function deleteAction()
   {
-
+    $this->blogService->delete($this->params()->fromRoute('postId'));
+    $this->redirect()->toRoute('blog_index');
   }
 }
