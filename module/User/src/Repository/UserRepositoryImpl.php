@@ -13,7 +13,7 @@ class UserRepositoryImpl implements UserRepository
 
   public function add(User $user)
   {
-    $sql = new Zend\Db\Sql\Sql($this->adapter);
+    $sql = new \Zend\Db\Sql\Sql($this->adapter);
 
     $insert = $sql->insert()
       ->values([
@@ -22,7 +22,7 @@ class UserRepositoryImpl implements UserRepository
         'email'       => $user->getEmail(),
         'password'    => $this->generatePassword($user->getPassword()),
         'created'     => time()
-      ]);
+      ])->into('user');
 
     $statement = $sql->prepareStatementForSqlObject($insert);
     $statement->execute();

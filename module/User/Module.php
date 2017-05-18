@@ -17,7 +17,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
           __NAMESPACE__ => __DIR__ . '/src'
         ]
       ]
-    ]
+    ];
   }
 
   public function getConfig()

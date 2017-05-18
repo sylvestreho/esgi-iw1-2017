@@ -13,7 +13,7 @@ class IndexController extends AbstractActionController
   protected $addUserFilter;
   protected $userService;
 
-  public function __construct(User\Service\UserService $userService, User\InputFilter\AddUser $addUser)
+  public function __construct(\User\Service\UserService $userService, \User\InputFilter\AddUser $addUser)
   {
     $this->userService = $userService;
     $this->addUserFilter = $addUser;
