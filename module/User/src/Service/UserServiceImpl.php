@@ -11,7 +11,7 @@ class UserServiceImpl implements UserService
 
   public function add(User $user)
   {
-    $this->userRepository->add($user);
+      $this->userRepository->add($user);
   }
 
   public function getUserRepository()
@@ -38,15 +38,14 @@ class UserServiceImpl implements UserService
     $authenticationAdapter = $authenticationService->getAdapter();
     $authenticationAdapter->setIdentity($email);
     $authenticationAdapter->setCredential($password);
-
     $result = $authenticationService->authenticate();
 
     if ($result->isValid()) {
       $identityObject = $authenticationAdapter->getResultRowObject(
-          null,
-          ['password'] // exclude password
+        null,
+        ['password'] // exclude sensitive data
       );
-      $authenticationService->getStorage()->write($identityObject); // write to session
+      $authenticationService->getStorage()->write($identityObject);
 
       return true;
     }

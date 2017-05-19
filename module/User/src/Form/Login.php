@@ -20,7 +20,7 @@ class Login extends Form
     $password->setAttribute('class', 'form-control');
 
     $submit = new Element\Submit('submit');
-    $submit->setLabel('Log me in!');
+    $submit->setValue('Log me in!');
     $submit->setAttribute('class', 'btn btn-primary');
 
     $this->add($email);

@@ -52,5 +52,7 @@ class UserRepositoryImpl implements UserRepository
       'password', // credential column
       $callback // how password should be handled
     );
+
+    return $authenticationAdapter;
   }
 }
