@@ -14,6 +14,26 @@ return [
             'action'      => 'add'
           ]
         ]
+      ],
+      'login' => [
+          'type' => 'Literal',
+          'options' => [
+            'route' => '/user/login',
+            'defaults' => [
+              'controller'  => 'User\Controller\Index',
+              'action'      => 'login'
+            ]
+          ]
+      ],
+      'logout' => [
+          'type' => 'Literal',
+          'options' => [
+            'route' => '/user/logout',
+            'defaults' => [
+              'controller'  => 'User\Controller\Index',
+              'action'      => 'logout'
+            ]
+          ]
       ]
     ]
   ],

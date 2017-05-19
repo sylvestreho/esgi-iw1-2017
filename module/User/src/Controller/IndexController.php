@@ -4,6 +4,7 @@ namespace User\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use User\Form\Add;
+use User\Form\Login;
 use User\Entity\User;
 use User\InputFilter\AddUser;
 use Zend\View\Model\ViewModel;
@@ -36,5 +37,20 @@ class IndexController extends AbstractActionController
     }
 
     return new ViewModel($variables);
+  }
+
+  public function loginAction()
+  {
+    if ($this->identity() != null) {
+      return $this->redirect()->toRoute('blog_index');
+    }
+
+    $form = new Login();
+    
+  }
+
+  public function logoutAction()
+  {
+
   }
 }
