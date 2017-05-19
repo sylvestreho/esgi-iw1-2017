@@ -46,7 +46,30 @@ class IndexController extends AbstractActionController
     }
 
     $form = new Login();
-    
+
+    if ($this->request->isPost()) {
+      $form->setData($this->request->getPost());
+
+      if ($form->isValid()) {
+        $data = $form->getData();
+
+        $loginResult = $this->userService
+          ->login(
+            $data['email'],
+            $data['password']
+          );
+        if ($loginResult == true) {
+          $this->flashMessenger()->addSuccessMessage('You are now logged in');
+        } else {
+          $this->flashMessenger()->addWarningMessage('Invalid Credentials');
+        }
+      }
+
+    }
+
+    return new ViewModel([
+      'form' => $form
+    ]);
   }
 
   public function logoutAction()
