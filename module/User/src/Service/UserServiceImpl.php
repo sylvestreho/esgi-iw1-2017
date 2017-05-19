@@ -3,6 +3,7 @@
 namespace User\Service;
 
 use User\Entity\User;
+use Zend\Authentication\AuthenticationService;
 
 class UserServiceImpl implements UserService
 {

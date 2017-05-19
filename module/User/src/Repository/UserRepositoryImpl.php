@@ -46,7 +46,7 @@ class UserRepositoryImpl implements UserRepository
     };
 
     $authenticationAdapter = new CallbackCheckAdapter(
-      $this->adpater,
+      $this->adapter,
       'user',   // table name
       'email',  // login column
       'password', // credential column

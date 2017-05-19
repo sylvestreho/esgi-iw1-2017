@@ -74,6 +74,9 @@ class IndexController extends AbstractActionController
 
   public function logoutAction()
   {
+    $authService = $this->userService->getAuthenticationService();
+    $authService->clearIdentity();
 
+    return $this->redirect()->toRoute('login');
   }
 }
