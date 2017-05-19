@@ -23,9 +23,11 @@
             ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
         ?>
     </head>
+    <?php $user = $this->identity(); ?>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
+              <div class="col-md-8">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
@@ -42,6 +44,34 @@
                         <li><a href="<?= $this->url('blog_index') ?>">Blog</a></li>
                     </ul>
                 </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="row">
+                      <?php if ($user != null): ?>
+                        <div class="col-md-4">
+                          <span class="label label-info">
+                            <?php
+                            echo sprintf("Hi %s %s!",
+                              $user->first_name,
+                              $user->last_name
+                            );
+                            ?>
+                          </span>
+                        </div>
+                        <div class="col-md-2">
+                          <a href="<?php echo $this->url('logout'); ?>" class="btn btn-danger">
+                            Logout
+                          </a>
+                        </div>
+                      <?php else: ?>
+                        <div class="col-md-2">
+                          <a href="<?php echo $this->url('login');?>" class="btn btn-primary">
+                            Login
+                          </a>
+                        </div>
+                      <?php endif; ?>
+                  </div>
+              </div>
             </div>
         </nav>
         <div class="container">
