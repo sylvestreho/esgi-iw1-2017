@@ -64,7 +64,28 @@ class BlogPostController extends AbstractRestfulController
 
   public function patch($id, $data)
   {
+    try {
+      $post = $this->blogService->findById($id);
+      if (!$post) {
+        throw new \Exception(sprintf("Post id %s not found", $id));
+      }
 
+      foreach ($data as $key => $value) {
+        $setter = 'set' . ucfirst($key);
+        if ($key == 'category') {
+          $category = new Category();
+          $category->setId($value);
+          $post->setCategory($category);
+        } elseif (method_exists($post, $setter)) {
+          $post->$setter($value);
+        }
+      }
+      $this->blogService->update($post);
+    } catch (\Exception $e) {
+      return new JsonModel([$e->getMessage()]);
+    }
+
+    return new JsonModel(['success']);
   }
 
   protected function postToArray($post)
