@@ -42,6 +42,7 @@ return [
         ],
     ],
     'view_manager' => [
+        'strategies' => [ 'ViewJsonStrategy' ],
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',

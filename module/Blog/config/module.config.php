@@ -6,6 +6,7 @@ return [
   'controllers' => [
     'factories' => [
       'Blog\Controller\Index' => 'Blog\Controller\IndexControllerFactory',
+      'Blog\Controller\BlogPost' => 'Blog\Controller\BlogPostControllerFactory'      
     ],
   ],
   'router' => [
@@ -86,6 +87,15 @@ return [
           ]
         ]
       ],
+      'api_posts' => [
+        'type'  => 'Segment',
+        'options' => [
+          'route' => '/api/blog/post[/:id]',
+          'defaults' => [
+            'controller' => 'Blog\Controller\BlogPost'
+          ]
+        ]
+      ]
     ]
   ],
   'view_manager' => [

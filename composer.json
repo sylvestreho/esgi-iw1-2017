@@ -25,7 +25,8 @@
         "zendframework/zend-paginator": "^2.7",
         "zendframework/zend-crypt": "^3.2",
         "zendframework/zend-authentication": "^2.5",
-        "zendframework/zend-mvc-plugin-identity": "^1.0"
+        "zendframework/zend-mvc-plugin-identity": "^1.0",
+        "zendframework/zend-json": "^3.0"
     },
     "autoload": {
         "psr-4": {
