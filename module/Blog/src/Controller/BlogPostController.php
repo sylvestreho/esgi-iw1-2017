@@ -6,14 +6,30 @@ use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 use Blog\Entity\Post;
 use Blog\Entity\Category;
+use Zend\Cache\StorageFactory;
 
 class BlogPostController extends AbstractRestfulController
 {
   protected $blogService;
+  protected $cache;
 
   public function __construct($blogService)
   {
     $this->blogService = $blogService;
+    $this->cache = StorageFactory::factory([
+      'adapter' => [
+        'name'  => 'filesystem', // apc, memcache, etc...
+        'options' => [
+          'namespace' => 'api_posts'
+        ]
+      ],
+      'plugins' => [
+        'exception_handler' => [
+          'throw_exceptions' => false
+        ],
+        'Serializer'
+      ]
+    ]);
   }
 
   public function create($data)
@@ -36,11 +52,19 @@ class BlogPostController extends AbstractRestfulController
 
   public function getList()
   {
+    $cacheKey = 'list';
+    $posts = $this->cache->getItem($cacheKey);
+
+    if (is_array($posts) && count($posts)) {
+      return new JsonModel($posts);
+    }
+
     $posts = $this->blogService->fetchAll();
     $results = [];
     foreach ($posts as $post) {
       $results[] = $this->postToArray($post);
     }
+    $this->cache->setItem($cacheKey, $results);
 
     return new JsonModel($results);
   }
